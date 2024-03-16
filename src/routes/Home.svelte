@@ -38,23 +38,6 @@
 
 	anim = decodeURIComponent(anim);
 
-	// function animate() {
-	// 	if (anim_mixer && anim_action) {
-	// 		anim_mixer.update(clock.getDelta());
-	// 	}
-
-	// 	// update physics world and threejs renderer
-	// 	threeScene.onFrameUpdate();
-
-	// 	threeScene.followTarget(elevation, azimuth);
-
-	// 	if (anim_played) {
-	// 		show_done = true;
-	// 	}
-
-	// 	animation_pointer = requestAnimationFrame(animate);
-	// }
-
 	function get_longest_track(tracks) {
 		let max_len = 0;
 		let max_times = [];
@@ -95,7 +78,7 @@
 			throw new Error("Model file type not supported");
 		}
 
-		Promise.all([model_task, loadJSON(`/anim-json/${anim}`)]).then(
+		Promise.all([model_task, loadJSON(`/anim-json/${anim}.json`)]).then(
 			([model_mesh, anim_data]) => {
 				if (model_type === "glb") {
 					model_mesh = model_mesh.scene.children[0];
