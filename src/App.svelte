@@ -9,7 +9,7 @@
 
 <Router>
 	<div>
-		<Route path="/:model/:anim/:step/:elevation/:azimuth" let:params>
+		<Route path="/:model/:anim/:elevation/:azimuth/:step" let:params>
 			<Home
 				model={params.model}
 				anim={params.anim}
