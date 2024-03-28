@@ -79,8 +79,10 @@
 				// console.log(fbx_unity_anim);
 				threeScene.scene.add(model_mesh);
 
+				return;
+
 				(async () => {
-					const start_idx = filenames.indexOf("Fist Fight B.json");
+					const start_idx = filenames.indexOf("Step Backward.json");
 
 					for (let i = start_idx; i < filenames.length; i++) {
 						const anim_data = await loadJSON(
