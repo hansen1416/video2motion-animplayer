@@ -81,10 +81,8 @@
 
 				(async () => {
 					for (let i = 0; i < filenames.length; i++) {
-						const anim_name = filenames[i].replace(".fbx", "");
-
 						const anim_data = await loadJSON(
-							`/anim-json/${anim_name}.json`,
+							`/anim-json/${filenames[i]}`,
 						);
 
 						const clip = THREE.AnimationClip.parse(anim_data);
@@ -155,7 +153,7 @@
 							"http://localhost:2020",
 							{
 								data: euler_data,
-								name: anim_name,
+								name: filenames[i].replace(".json", ""),
 							},
 							headers,
 						);
