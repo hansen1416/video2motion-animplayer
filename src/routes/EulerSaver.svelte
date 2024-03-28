@@ -3,6 +3,7 @@
 	 * play animation at a given frame, used to take screenshot by 'video-recorder'
 	 */
 	import _ from "lodash";
+	import axios from "axios";
 	import { onDestroy, onMount } from "svelte";
 	import * as THREE from "three";
 	import ThreeScene from "../lib/ThreeScene";
@@ -100,6 +101,21 @@
 
 						const max_times = get_longest_track(clip.tracks);
 
+						const euler_data = {};
+
+						model_mesh.traverse((node) => {
+							// @ts-ignore
+							if (node.isBone) {
+								// @ts-ignore
+								if (euler_data[node.name] === undefined) {
+									// somehow maximo has double bones, so only use the first one
+									euler_data[node.name] = [];
+								}
+							}
+						});
+
+						// console.log(euler_data);
+
 						for (let j = 0; j < max_times.length; j++) {
 							anim_action.time = max_times[j];
 
@@ -110,9 +126,16 @@
 							threeScene.onFrameUpdate();
 
 							// get the euler angles of each joints
-							console.log(model_mesh.rotation);
-
-							break;
+							model_mesh.traverse((node) => {
+								// @ts-ignore
+								if (node.isBone) {
+									euler_data[node.name].push([
+										node.rotation.x,
+										node.rotation.y,
+										node.rotation.z,
+									]);
+								}
+							});
 
 							// await new Promise((resolve) => {
 							// 	setTimeout(() => {
@@ -121,7 +144,25 @@
 							// });
 						}
 
-						break;
+						console.log(euler_data);
+
+						// todo, save `euler_data` to local file
+						const headers = {
+							"Content-Type": "application/json",
+						};
+
+						const reponse = await axios.post(
+							"http://localhost:2020",
+							{
+								data: euler_data,
+								name: anim_name,
+							},
+							headers,
+						);
+
+						console.log(reponse.data.message);
+
+						// break;
 					}
 				})();
 			},
