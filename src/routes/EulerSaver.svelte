@@ -80,7 +80,9 @@
 				threeScene.scene.add(model_mesh);
 
 				(async () => {
-					for (let i = 0; i < filenames.length; i++) {
+					const start_idx = filenames.indexOf("Fist Fight B.json");
+
+					for (let i = start_idx; i < filenames.length; i++) {
 						const anim_data = await loadJSON(
 							`/anim-json/${filenames[i]}`,
 						);
