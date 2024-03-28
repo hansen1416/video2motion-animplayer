@@ -1,7 +1,7 @@
 <script>
 	/**
-	 * 
-	*/
+	 *
+	 */
 	import _ from "lodash";
 	import { onDestroy, onMount } from "svelte";
 	import * as THREE from "three";
@@ -22,8 +22,9 @@
 	let anim_step = 0;
 	let max_anim_step = 0;
 
-	let animation_path = `/anim-json-euler/Stand Cover To Look.json`;
-	// let animation_path = `/anim-json-euler-pred/pred_Stand Cover To Look.json`;
+	let animation_path = `/anim-euler-uniform/180 Turn W_ Briefcase (1).json`;
+	// let animation_path = `/anim-euler-uniform/Step Backward.json`;
+
 	let frame_skip = 1;
 	let counter = 0;
 
@@ -101,29 +102,12 @@
 
 				// animation_data = {};
 
-				max_anim_step = anim_data["Hips"].values.length;
+				max_anim_step = anim_data["Hips"].length;
 
 				// animation_data = anim_data;
 				// iterate over anim_data object
 
-				animation_data = {};
-
-				for (let bone_name in anim_data) {
-					animation_data[bone_name] = anim_data[bone_name].values;
-				}
-
-				if (false) {
-					for (let i = 0; i < anim_data.length; i++) {
-						animation_data[anim_data[i]["name"]] =
-							anim_data[i]["values"];
-
-						console.log(anim_data[i]["values"].length);
-
-						if (anim_data[i]["values"].length > max_anim_step) {
-							max_anim_step = anim_data[i]["values"].length;
-						}
-					}
-				}
+				animation_data = anim_data;
 
 				console.log(max_anim_step, animation_data);
 			},

@@ -22,8 +22,6 @@
 
 	let animation_pointer = 0;
 
-	const clock = new THREE.Clock();
-
 	// model file name
 	export let model;
 
@@ -79,10 +77,9 @@
 				// console.log(fbx_unity_anim);
 				threeScene.scene.add(model_mesh);
 
-				return;
-
 				(async () => {
-					const start_idx = filenames.indexOf("Step Backward.json");
+					// const start_idx = filenames.indexOf("Step Backward.json");
+					const start_idx = 0;
 
 					for (let i = start_idx; i < filenames.length; i++) {
 						const anim_data = await loadJSON(
@@ -123,7 +120,7 @@
 
 							anim_action.play();
 
-							anim_mixer.update(clock.getDelta());
+							// anim_mixer.setTime(max_times[j]);
 
 							threeScene.onFrameUpdate();
 
@@ -139,11 +136,7 @@
 								}
 							});
 
-							// await new Promise((resolve) => {
-							// 	setTimeout(() => {
-							// 		resolve();
-							// 	}, 100);
-							// });
+							anim_mixer.update(1 / 60);
 						}
 
 						console.log(euler_data);
@@ -164,7 +157,7 @@
 
 						console.log(reponse.data.message);
 
-						// break;
+						break;
 					}
 				})();
 			},
