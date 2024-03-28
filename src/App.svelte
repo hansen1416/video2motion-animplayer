@@ -23,6 +23,6 @@
 		<Route path="/glb" component={Glb} />
 		<Route path="/glb-euler" component={GlbEuler} />
 		<Route path="/camera" component={Camera} />
-		<Route path="/:model/euler-saver" component={EulerSaver} />
+		<Route path="/:anim/euler-saver" component={EulerSaver} />
 	</div>
 </Router>
