@@ -5,6 +5,7 @@
 	import Camera from "./routes/Camera.svelte";
 	import Glb from "./routes/Glb.svelte";
 	import GlbEuler from "./routes/GlbEuler.svelte";
+	import EulerSaver from "./routes/EulerSaver.svelte";
 </script>
 
 <Router>
@@ -22,5 +23,6 @@
 		<Route path="/glb" component={Glb} />
 		<Route path="/glb-euler" component={GlbEuler} />
 		<Route path="/camera" component={Camera} />
+		<Route path="/:model/euler-saver" component={EulerSaver} />
 	</div>
 </Router>

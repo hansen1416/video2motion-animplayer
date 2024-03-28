@@ -1,4 +1,7 @@
 <script>
+	/**
+	 * 
+	*/
 	import _ from "lodash";
 	import { onDestroy, onMount } from "svelte";
 	import * as THREE from "three";
