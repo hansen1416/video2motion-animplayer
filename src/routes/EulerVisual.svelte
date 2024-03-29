@@ -3,6 +3,7 @@
 	 *
 	 */
 	import _ from "lodash";
+	import axios from "axios";
 	import { onDestroy, onMount } from "svelte";
 	import * as THREE from "three";
 	import ThreeScene from "../lib/ThreeScene";
@@ -20,35 +21,42 @@
 	let animation_data = null;
 
 	let anim_step = 0;
-	let max_anim_step = 0;
+	let max_anim_step = 30;
 
-	// let animation_path = `/anim-euler-uniform/180 Turn W_ Briefcase (1).json`;
-	let animation_path = `/anim-euler-uniform/Baseball Step Out.json`;
-
-	let frame_skip = 1;
 	let counter = 0;
 
+	const bones_to_use = [
+		"Hips",
+		"RightUpLeg",
+		"RightLeg",
+		"LeftUpLeg",
+		"LeftLeg",
+		"Spine",
+		"Spine1",
+		"Spine2",
+		"Neck",
+		"Head",
+		"RightShoulder",
+		"RightArm",
+		"RightForeArm",
+		"LeftShoulder",
+		"LeftArm",
+		"LeftForeArm",
+	];
+
 	function animate() {
-		return;
+		if (animation_data && bones) {
+			for (let i in animation_data[anim_step]) {
+				const bone_name = bones_to_use[i];
 
-		if (counter % frame_skip === 0 && animation_data && bones) {
-			for (let bone_name in bones) {
-				if (animation_data[bone_name] !== undefined) {
-					if (animation_data[bone_name][anim_step] === undefined) {
-						continue;
-					}
-
-					const x = animation_data[bone_name][anim_step][0];
-					const y = animation_data[bone_name][anim_step][1];
-					const z = animation_data[bone_name][anim_step][2];
-
-					bones[bone_name].rotation.set(x, y, z);
-				}
+				bones[bone_name].rotation.x = animation_data[anim_step][i][0];
+				bones[bone_name].rotation.y = animation_data[anim_step][i][1];
+				bones[bone_name].rotation.z = animation_data[anim_step][i][2];
 			}
 
 			anim_step += 1;
 
-			if (anim_step > max_anim_step) {
+			if (anim_step >= max_anim_step) {
 				anim_step = 0;
 			}
 		}
@@ -63,9 +71,6 @@
 
 	onMount(() => {
 		// if `animation_path` start with /anim-json-euler-pred
-		if (animation_path.startsWith("/anim-json-euler-pred")) {
-			frame_skip = 3;
-		}
 
 		threeScene = new ThreeScene(
 			canvas,
@@ -82,7 +87,11 @@
 
 		Promise.all([
 			loadGLTF(`/glb/dors.glb`),
-			axios.post("http://localhost:2020/euler-visual", {}, headers),
+			axios.get(
+				"http://localhost:5000/",
+				{ params: { idx: 1000 } },
+				headers,
+			),
 		]).then(([glb_model, euler_data]) => {
 			glb_model = glb_model.scene.children[0];
 
@@ -106,18 +115,7 @@
 				}
 			});
 
-			console.log(bones);
-
-			// // animation_data = {};
-
-			// max_anim_step = anim_data["Hips"].length;
-
-			// // animation_data = anim_data;
-			// // iterate over anim_data object
-
-			// animation_data = anim_data;
-
-			// console.log(max_anim_step, animation_data);
+			animation_data = euler_data.data.data;
 		});
 
 		animate();
