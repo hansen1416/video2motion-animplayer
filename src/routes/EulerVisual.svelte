@@ -20,7 +20,7 @@
 	let animation_data = null;
 
 	let anim_step = 0;
-	let max_anim_step = 30;
+	let max_anim_step = 29;
 
 	let counter = 0;
 	let direction = 1;
@@ -56,13 +56,15 @@
 				bones[bone_name].rotation.z = animation_data[anim_step][i][2];
 			}
 
+			// console.log(anim_step, animation_data[anim_step]);
+
 			if (direction > 0) {
 				anim_step += 1;
 			} else {
 				anim_step -= 1;
 			}
 
-			if (anim_step >= max_anim_step || anim_step < 0) {
+			if (anim_step >= max_anim_step || anim_step <= 0) {
 				direction *= -1;
 			}
 		}
