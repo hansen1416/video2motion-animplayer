@@ -1,13 +1,12 @@
 <script>
 	/**
-	 *
+	 * visualizes the euler angles from the server
 	 */
 	import _ from "lodash";
 	import axios from "axios";
 	import { onDestroy, onMount } from "svelte";
-	import * as THREE from "three";
 	import ThreeScene from "../lib/ThreeScene";
-	import { loadGLTF, loadJSON } from "../utils/ropes";
+	import { loadGLTF } from "../utils/ropes";
 
 	/** @type {HTMLCanvasElement} */
 	let canvas;
@@ -24,6 +23,9 @@
 	let max_anim_step = 30;
 
 	let counter = 0;
+	let direction = 1;
+
+	let skip_frames = 3;
 
 	const bones_to_use = [
 		"Hips",
@@ -45,7 +47,7 @@
 	];
 
 	function animate() {
-		if (animation_data && bones) {
+		if (animation_data && bones && counter % skip_frames === 0) {
 			for (let i in animation_data[anim_step]) {
 				const bone_name = bones_to_use[i];
 
@@ -54,10 +56,14 @@
 				bones[bone_name].rotation.z = animation_data[anim_step][i][2];
 			}
 
-			anim_step += 1;
+			if (direction > 0) {
+				anim_step += 1;
+			} else {
+				anim_step -= 1;
+			}
 
-			if (anim_step >= max_anim_step) {
-				anim_step = 0;
+			if (anim_step >= max_anim_step || anim_step < 0) {
+				direction *= -1;
 			}
 		}
 
@@ -89,7 +95,7 @@
 			loadGLTF(`/glb/dors.glb`),
 			axios.get(
 				"http://localhost:5000/",
-				{ params: { idx: 1000 } },
+				{ params: { idx: 10 } },
 				headers,
 			),
 		]).then(([glb_model, euler_data]) => {
