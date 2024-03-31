@@ -97,7 +97,7 @@
 			loadGLTF(`/glb/dors.glb`),
 			axios.get(
 				"http://localhost:5000/",
-				{ params: { idx: 10 } },
+				{ params: { idx: 9 } },
 				headers,
 			),
 		]).then(([glb_model, euler_data]) => {
