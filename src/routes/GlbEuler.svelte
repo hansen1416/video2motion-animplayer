@@ -23,7 +23,7 @@
 	let max_anim_step = 0;
 
 	// let animation_path = `/anim-euler-uniform/180 Turn W_ Briefcase (1).json`;
-	let animation_path = `/anim-euler-uniform/Baseball Step Out.json`;
+	let animation_path = `/anim-euler-uniform/180 Turn W_ Briefcase (1)-30-0.json`;
 
 	let frame_skip = 1;
 	let counter = 0;
