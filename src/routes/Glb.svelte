@@ -21,7 +21,7 @@
 	const clock = new THREE.Clock();
 
 	function animate() {
-		if (anim_mixer && anim_action) {
+		if (false && anim_mixer && anim_action) {
 			anim_mixer.update(clock.getDelta());
 		}
 
@@ -52,6 +52,17 @@
 			anim_mixer = new THREE.AnimationMixer(glb_model);
 			// console.log(fbx_unity_anim);
 			threeScene.scene.add(glb_model);
+
+			glb_model.traverse((node) => {
+				// @ts-ignore
+				if (node.isMesh) {
+					node.castShadow = true;
+				}
+				// @ts-ignore
+				if (node.isBone) {
+					console.log(node);
+				}
+			});
 
 			const clip = THREE.AnimationClip.parse(anim_data);
 
