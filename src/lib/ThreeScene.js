@@ -41,6 +41,8 @@ export default class ThreeScene {
 
 		this.scene = new THREE.Scene();
 
+		// this.scene.matrixWorldAutoUpdate = false;
+
 		// this.scene.add(new THREE.AxesHelper(5));
 
 		this.camera = new THREE.PerspectiveCamera(
