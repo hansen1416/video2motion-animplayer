@@ -22,12 +22,12 @@
 	let anim_step = 0;
 	let max_anim_step = 0;
 
-	// let animation_path = `/anim-euler-uniform/180 Turn W_ Briefcase (1).json`;
-	// let animation_path = `/anim-euler-uniform/Walking (9)-30-0.json`;
-	let animation_path = `/anim-euler-uniform/180 Turn W_ Briefcase (1)-30-0.json`;
-	// let animation_path = `/anim-euler-uniform/Receiver Catch-30-0.json`;
-	// let animation_path = `/anim-euler-uniform/Pull Plant-30-0.json`;
-	// let animation_path = `/anim-euler-uniform/Sitting Clap (4)-30-0.json`;
+	let animation_path = `/anim-calculated-euler/Arms Hip Hop Dance-30-0.json`;
+	// let animation_path = `/anim-calculated-euler/Walking (9)-30-0.json`;
+	// let animation_path = `/anim-calculated-euler/180 Turn W_ Briefcase (1)-30-0.json`;
+	// let animation_path = `/anim-calculated-euler/Receiver Catch-30-0.json`;
+	// let animation_path = `/anim-calculated-euler/Pull Plant-30-0.json`;
+	// let animation_path = `/anim-calculated-euler/Sitting Clap (4)-30-0.json`;
 
 	let frame_skip = 1;
 	let counter = 0;
