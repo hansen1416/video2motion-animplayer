@@ -23,9 +23,9 @@
 	let anim_step = 0;
 	let max_anim_step = 0;
 
-	let animation_path = `/anim-calculated-quaternion/Arms Hip Hop Dance-30-0.json`;
+	// let animation_path = `/anim-calculated-quaternion/Arms Hip Hop Dance-30-0.json`;
 	// let animation_path = `/anim-calculated-quaternion/Walking (9)-30-0.json`;
-	// let animation_path = `/anim-calculated-quaternion/180 Turn W_ Briefcase (1)-30-0.json`;
+	let animation_path = `/anim-calculated-quaternion/180 Turn W_ Briefcase (1)-30-0.json`;
 	// let animation_path = `/anim-calculated-quaternion/Receiver Catch-30-0.json`;
 	// let animation_path = `/anim-calculated-quaternion/Pull Plant-30-0.json`;
 	// let animation_path = `/anim-calculated-quaternion/Sitting Clap (4)-30-0.json`;
