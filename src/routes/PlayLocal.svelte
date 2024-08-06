@@ -26,31 +26,60 @@
 	let animationFrame = 0;
 
 	const joints_mapping = {
-		0: "Pelvis",
-		1: "L_Hip",
-		2: "R_Hip",
-		3: "Spine1",
-		4: "L_Knee",
-		5: "R_Knee",
-		6: "Spine2",
-		7: "L_Ankle",
-		8: "R_Ankle",
-		9: "Spine3",
-		10: "L_Foot",
-		11: "R_Foot",
+		0: "Hips",
+		1: "LeftUpLeg",
+		2: "RightUpLeg",
+		3: "Spine",
+		4: "LeftLeg",
+		5: "RightLeg",
+		6: "Spine1",
+		7: "LeftFoot",
+		8: "RightFoot",
+		9: "Spine2",
+		10: "LeftToeBase",
+		11: "RightToeBase",
 		12: "Neck",
-		13: "L_Collar",
-		14: "R_Collar",
+		13: "LeftShoulder",
+		14: "RightShoulder",
 		15: "Head",
-		16: "L_Shoulder",
-		17: "R_Shoulder",
-		18: "L_Elbow",
-		19: "R_Elbow",
-		20: "L_Wrist",
-		21: "R_Wrist",
+		16: "LeftArm",
+		17: "RightArm",
+		18: "LeftForeArm",
+		19: "RightForeArm",
+		20: "LeftHand",
+		21: "RightHand",
 		22: "L_Hand",
 		23: "R_Hand",
 	};
+
+	// [
+	// 	"Hips",
+	// 	"Spine",
+	// 	"Spine1",
+	// 	"Spine2",
+	// 	"Neck",
+	// 	"Head",
+
+	// 	"LeftShoulder",
+	// 	"LeftArm",
+	// 	"LeftForeArm",
+	// 	"LeftHand",
+	// 	"RightShoulder",
+	// 	"RightArm",
+	// 	"RightForeArm",
+	// 	"RightHand",
+
+	// 	"LeftUpLeg",
+	// 	"LeftLeg",
+	// 	"LeftFoot",
+	// 	"LeftToeBase",
+	// 	"LeftToe_End",
+	// 	"RightUpLeg",
+	// 	"RightLeg",
+	// 	"RightFoot",
+	// 	"RightToeBase",
+	// 	"RightToe_End",
+	// ];
 
 	function animate() {
 		if (animationData) {
@@ -103,6 +132,8 @@
 					}
 				}
 			});
+
+			console.log(Object.keys(bones));
 		});
 
 		animate();
