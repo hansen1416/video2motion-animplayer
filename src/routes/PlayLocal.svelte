@@ -21,7 +21,49 @@
 	/** @type {HTMLInputElement} */
 	let fileInput;
 
+	let animationData;
+
+	let animationFrame = 0;
+
+	const joints_mapping = {
+		0: "Pelvis",
+		1: "L_Hip",
+		2: "R_Hip",
+		3: "Spine1",
+		4: "L_Knee",
+		5: "R_Knee",
+		6: "Spine2",
+		7: "L_Ankle",
+		8: "R_Ankle",
+		9: "Spine3",
+		10: "L_Foot",
+		11: "R_Foot",
+		12: "Neck",
+		13: "L_Collar",
+		14: "R_Collar",
+		15: "Head",
+		16: "L_Shoulder",
+		17: "R_Shoulder",
+		18: "L_Elbow",
+		19: "R_Elbow",
+		20: "L_Wrist",
+		21: "R_Wrist",
+		22: "L_Hand",
+		23: "R_Hand",
+	};
+
 	function animate() {
+		if (animationData) {
+			// todo apply animation data to bones
+			applyAnimationData();
+
+			animationFrame += 1;
+
+			if (animationFrame >= animationData.length - 1) {
+				animationFrame = 0;
+			}
+		}
+
 		// update physics world and threejs renderer
 		threeScene.onFrameUpdate();
 
@@ -36,8 +78,8 @@
 		);
 
 		// -100 is ground level
-		// threeScene.scene.position.set(0, -1, 0);
-		threeScene.scene.position.set(0, -100, 0);
+		threeScene.scene.position.set(0, -1, 0);
+		// threeScene.scene.position.set(0, -100, 0);
 
 		Promise.all([loadGLTF(`/glb/dors.glb`)]).then(([glb_model]) => {
 			glb_model = glb_model.scene.children[0];
@@ -88,10 +130,30 @@
 			// split the data to chunks, each of length 72
 			const chunks = _.chunk(data, 72);
 
-			console.log(chunks);
+			// console.log(chunks);
+			animationData = chunks;
 		};
 
 		reader.readAsArrayBuffer(file);
+	}
+
+	function applyAnimationData() {
+		if (animationData) {
+			const data = animationData[animationFrame];
+
+			// console.log(data);
+
+			// apply data to bones
+			Object.keys(bones).forEach((bone_name, i) => {
+				const bone = bones[bone_name];
+
+				const x = data[i * 3];
+				const y = data[i * 3 + 1];
+				const z = data[i * 3 + 2];
+
+				bone.position.set(x, y, z);
+			});
+		}
 	}
 </script>
 
