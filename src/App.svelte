@@ -8,6 +8,7 @@
 	import GlbQuaternion from "./routes/GlbQuaternion.svelte";
 	import EulerSaver from "./routes/EulerSaver.svelte";
 	import EulerVisual from "./routes/EulerVisual.svelte";
+	import PlayLocal from "./routes/PlayLocal.svelte";
 </script>
 
 <Router>
@@ -28,5 +29,6 @@
 		<Route path="/camera" component={Camera} />
 		<Route path="/:anim/euler-saver" component={EulerSaver} />
 		<Route path="/euler-visual" component={EulerVisual} />
+		<Route path="/play-local" component={PlayLocal} />
 	</div>
 </Router>
