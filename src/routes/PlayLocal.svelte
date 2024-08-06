@@ -18,6 +18,9 @@
 
 	let bones = {};
 
+	/** @type {HTMLInputElement} */
+	let fileInput;
+
 	function animate() {
 		// update physics world and threejs renderer
 		threeScene.onFrameUpdate();
@@ -33,7 +36,8 @@
 		);
 
 		// -100 is ground level
-		threeScene.scene.position.set(0, -50, 0);
+		// threeScene.scene.position.set(0, -1, 0);
+		threeScene.scene.position.set(0, -100, 0);
 
 		Promise.all([loadGLTF(`/glb/dors.glb`)]).then(([glb_model]) => {
 			glb_model = glb_model.scene.children[0];
@@ -68,11 +72,34 @@
 
 		threeScene.dispose();
 	});
+
+	function onFileChange(e) {
+		const file = e.target.files[0];
+
+		const reader = new FileReader();
+
+		reader.onload = (e) => {
+			const arrayBuffer = e.target.result;
+			// Use the array buffer to process the binary data
+			// console.log(arrayBuffer);
+
+			const data = new Float32Array(arrayBuffer);
+
+			// split the data to chunks, each of length 72
+			const chunks = _.chunk(data, 72);
+
+			console.log(chunks);
+		};
+
+		reader.readAsArrayBuffer(file);
+	}
 </script>
 
 <section>
 	<canvas bind:this={canvas} />
 </section>
+
+<input type="file" bind:this={fileInput} on:change={onFileChange} />
 
 <style>
 	canvas {
