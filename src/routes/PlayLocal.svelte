@@ -181,12 +181,73 @@
 				const bone = bones[joints_mapping[i]];
 
 				if (bone) {
-					console.log(data_chunks[i]);
-
 					const [x, y, z] = data_chunks[i];
 
-					bone.rotation.set(x, y, z);
-					//  = new THREE.Euler(x, y, z);
+					let euler = new THREE.Euler(x, y, z);
+
+					if (bone.name === "LeftShoulder") {
+						const qa = new THREE.Quaternion(
+							0.4816880226135254,
+							0.4927692711353302,
+							-0.5889065265655518,
+							0.4223082959651947,
+						);
+
+						const qb = new THREE.Quaternion().setFromEuler(
+							new THREE.Euler(x, y, z),
+						);
+
+						const q = qb.multiply(qa);
+
+						euler = new THREE.Euler().setFromQuaternion(q);
+					} else if (bone.name === "RightShoulder") {
+						const qa = new THREE.Quaternion(
+							0.48168784379959106,
+							-0.4927700459957123,
+							0.588905930519104,
+							0.42230847477912903,
+						);
+
+						const qb = new THREE.Quaternion().setFromEuler(
+							new THREE.Euler(x, y, z),
+						);
+
+						const q = qb.multiply(qa);
+
+						euler = new THREE.Euler().setFromQuaternion(q);
+					} else if (bone.name === "LeftUpLeg") {
+						const qa = new THREE.Quaternion(
+							0.0019053755095228553,
+							0.056365966796875,
+							-0.9978452920913696,
+							0.03352741152048111,
+						);
+
+						const qb = new THREE.Quaternion().setFromEuler(
+							new THREE.Euler(x, y, z),
+						);
+
+						const q = qb.multiply(qa);
+
+						euler = new THREE.Euler().setFromQuaternion(q);
+					} else if (bone.name === "RightUpLeg") {
+						const qa = new THREE.Quaternion(
+							0.0019610640592873096,
+							-0.05636449530720711,
+							0.9978451728820801,
+							0.03352941572666168,
+						);
+
+						const qb = new THREE.Quaternion().setFromEuler(
+							new THREE.Euler(x, y, z),
+						);
+
+						const q = qb.multiply(qa);
+
+						euler = new THREE.Euler().setFromQuaternion(q);
+					}
+
+					bone.rotation.set(euler.x, euler.y, euler.z);
 				}
 			}
 		}
