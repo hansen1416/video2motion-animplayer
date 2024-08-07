@@ -5,6 +5,7 @@
 	 */
 	import _ from "lodash";
 	import { onDestroy, onMount } from "svelte";
+	import * as THREE from "three";
 	import ThreeScene from "../lib/ThreeScene";
 	import { loadGLTF } from "../utils/ropes";
 
@@ -172,18 +173,22 @@
 		if (animationData) {
 			const data = animationData[animationFrame];
 
-			// console.log(data);
+			const data_chunks = _.chunk(data, 3);
 
-			// apply data to bones
-			Object.keys(bones).forEach((bone_name, i) => {
-				const bone = bones[bone_name];
+			// console.log(data_chunks);
 
-				const x = data[i * 3];
-				const y = data[i * 3 + 1];
-				const z = data[i * 3 + 2];
+			for (let i = 0; i < data_chunks.length; i++) {
+				const bone = bones[joints_mapping[i]];
 
-				bone.position.set(x, y, z);
-			});
+				if (bone) {
+					console.log(data_chunks[i]);
+
+					const [x, y, z] = data_chunks[i];
+
+					bone.rotation.set(x, y, z);
+					//  = new THREE.Euler(x, y, z);
+				}
+			}
 		}
 	}
 </script>
