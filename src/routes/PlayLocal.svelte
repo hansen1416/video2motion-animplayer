@@ -275,6 +275,27 @@
 		if (animationJsonData) {
 			animationJsonFrame += 1;
 
+			for (let bone_name in bones) {
+				if (`${bone_name}.quaternion` in animationJsonData) {
+					const data =
+						animationJsonData[`${bone_name}.quaternion`][
+							"quaternions"
+						][animationJsonFrame];
+
+					if (!data) {
+						continue;
+					}
+
+					const bone = bones[bone_name];
+
+					const [x, y, z, w] = data;
+
+					const quaternion = new THREE.Quaternion(x, y, z, w);
+
+					bone.rotation.setFromQuaternion(quaternion);
+				}
+			}
+
 			if (
 				animationJsonFrame >=
 				animationJsonData["Hips.quaternion"]["quaternions"].length - 1
