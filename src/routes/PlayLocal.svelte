@@ -21,10 +21,16 @@
 
 	/** @type {HTMLInputElement} */
 	let fileInput;
+	/** @type {HTMLInputElement} */
+	let jsonfileInput;
 
 	let animationData;
 
+	let animationJsonData;
+
 	let animationFrame = 0;
+
+	let animationJsonFrame = 0;
 
 	const joints_mapping = {
 		0: "Hips",
@@ -83,16 +89,8 @@
 	// ];
 
 	function animate() {
-		if (animationData) {
-			// todo apply animation data to bones
-			applyAnimationData();
-
-			animationFrame += 1;
-
-			if (animationFrame >= animationData.length - 1) {
-				animationFrame = 0;
-			}
-		}
+		// apply animation data to bones
+		applyAnimationData();
 
 		// update physics world and threejs renderer
 		threeScene.onFrameUpdate();
@@ -134,7 +132,7 @@
 				}
 			});
 
-			console.log(Object.keys(bones));
+			// console.log(Object.keys(bones));
 		});
 
 		animate();
@@ -167,6 +165,22 @@
 		};
 
 		reader.readAsArrayBuffer(file);
+	}
+
+	function onJsonFileChange(e) {
+		const file = e.target.files[0];
+
+		const reader = new FileReader();
+
+		reader.onload = (e) => {
+			const data = JSON.parse(e.target.result);
+			//
+			animationJsonData = data;
+
+			console.log(animationJsonData);
+		};
+
+		reader.readAsText(file);
 	}
 
 	function applyAnimationData() {
@@ -250,6 +264,23 @@
 					bone.rotation.set(euler.x, euler.y, euler.z);
 				}
 			}
+
+			animationFrame += 1;
+
+			if (animationFrame >= animationData.length - 1) {
+				animationFrame = 0;
+			}
+		}
+
+		if (animationJsonData) {
+			animationJsonFrame += 1;
+
+			if (
+				animationJsonFrame >=
+				animationJsonData["Hips.quaternion"]["quaternions"].length - 1
+			) {
+				animationJsonFrame = 0;
+			}
 		}
 	}
 </script>
@@ -258,7 +289,15 @@
 	<canvas bind:this={canvas} />
 </section>
 
-<input type="file" bind:this={fileInput} on:change={onFileChange} />
+<label for="file">
+	<span>Bin File</span>
+	<input type="file" bind:this={fileInput} on:change={onFileChange} />
+</label>
+
+<label for="file">
+	<span>Json file</span>
+	<input type="file" bind:this={jsonfileInput} on:change={onJsonFileChange} />
+</label>
 
 <style>
 	canvas {
